@@ -1,7 +1,7 @@
 {
   "name": "module-13-challenge-orm",
   "version": "1.0.0",
-  "description": "",
+  "description": "ORM back-end for an E-Commerice platform using MySQL, Sequelize, and Express.js",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
