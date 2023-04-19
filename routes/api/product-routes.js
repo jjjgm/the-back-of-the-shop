@@ -10,10 +10,10 @@ router.get('/', async (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
   try {
-    const product = await Product.findAll({
+    const products = await Product.findAll({
       include: [{ model: Category }, { model: Tag }]
     });
-    res.status(200).json(product);
+    res.status(200).json(products);
   }
   catch (err) {
     res.status(500).json(err);
@@ -49,15 +49,6 @@ router.post('/', async (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
-// try {
-//   const product= {
-//     "product_name": STRING,
-//     "price": NUMERIC,
-//     "stock": NUMERIC,
-//     "tagIds": [STRING]
-//   } = req.body;
-//   JSON.parse(req.body);
-//   console.log(req.body);
 
   Product.create(req.body)
     .then((product) => {
