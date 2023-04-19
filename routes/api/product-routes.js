@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const { NUMERIC } = require('sequelize');
+const { STRING } = require('sequelize');
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
@@ -8,16 +10,14 @@ router.get('/', async (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
   try {
-    const productData = await Product.findAll({
-      include: [{ model: Category }, { model: ProductTag }, { model: Tag }]
+    const products = await Product.findAll({
+      include: [{ model: Category }, { model: Tag }]
     });
-    res.status(200).json(tagData);
+    res.status(200).json(products);
   }
   catch (err) {
     res.status(500).json(err);
   }
-
-  
 });
 
 // get one product
@@ -28,11 +28,11 @@ router.get('/:id', async (req, res) => {
     const product = await Product.findByPk(req.params.id, {
       include: [{ model: Category }, { model: Tag }]
     });
-    if (!Product) {
+    if (!product) {
       res.status(404).json({ message: 'No Product was found with this id!' });
       return;
     }
-    res.status(200).json(tag);
+    res.status(200).json(product);
   }
   catch (err) {
     res.status(500).json(err);
@@ -40,7 +40,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // create new product
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -49,6 +49,16 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
+// try {
+//   const product= {
+//     "product_name": STRING,
+//     "price": NUMERIC,
+//     "stock": NUMERIC,
+//     "tagIds": [STRING]
+//   } = req.body;
+//   JSON.parse(req.body);
+//   console.log(req.body);
+
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
@@ -63,8 +73,10 @@ router.post('/', (req, res) => {
       }
       // if no product tags, just respond
       res.status(200).json(product);
+
     })
     .then((productTagIds) => res.status(200).json(productTagIds))
+
     .catch((err) => {
       console.log(err);
       res.status(400).json(err);
@@ -116,13 +128,13 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
   try {
-    const category = await Product.destroy({
+    const product = await Product.destroy({
       where: {
         id: req.params.id
       }
     });
     if (!product) {
-      res.status(404).json({ message: 'No producut was found with this id!' });
+      res.status(404).json({ message: 'No product was found with this id!' });
       return;
     }
     res.status(200).json(product);
