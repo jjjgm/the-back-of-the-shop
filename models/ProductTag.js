@@ -23,7 +23,9 @@ ProductTag.init(
       type: DataTypes.INTEGER,
       references: {
         model: 'tag',
-        key: 'id'
+        key: 'id',
+        //REALIZED IT NEEDED THIS HERE WHEN RESTFUL API ADDED THINGS TO THE WRONG PLACE...
+        onDelete: 'CASCADE'
       }
     }
   },

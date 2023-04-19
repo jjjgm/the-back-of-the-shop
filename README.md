@@ -50,7 +50,7 @@ Instructor- Bryan Swarthout, demonstrating use/needs of through tables during of
 (UCLA.ext)
 
 ## Tests
-[Deployment Video]()
-[Heroku Deployment Link]()
+[Deployment Video](https://drive.google.com/file/d/1Bhbe5SFY0lNTUXnn4WTF_UDQAcrl-651/view)
+[Heroku Deployment Link](https://hidden-anchorage-49000.herokuapp.com)
 
 

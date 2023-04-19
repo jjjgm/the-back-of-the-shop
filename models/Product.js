@@ -38,8 +38,9 @@ Product.init(
       type: DataTypes.INTEGER,
       references: {
         model:'category',
-        key: 'id'
-        // CONTEMPLATE THE OPTION OF WHAT WOULD HAPPEN IF PRODUCT DELETION? OK FOR NOW
+        key: 'id',
+        // CONTEMPLATE THE OPTION OF WHAT WOULD HAPPEN IF PRODUCT DELETION? NOT OKAY NEED TO ADD
+        onDelete: 'CASCADE',
       }
     }
   },
